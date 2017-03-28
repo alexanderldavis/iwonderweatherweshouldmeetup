@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IWWWSM</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  </head>
+  <body>
+
+  <script type="text/javascript">
+    $.ajax({
+      url: "http://localhost:8088/proxy/meetupmain?zip=94066&radius=1&category=25&order=members",
+      method: "GET"
+    }).done(function(data) {
+      console.log(data);
+    });
+  </script>
+  </body>
+</html>

@@ -12,8 +12,9 @@ mongo = PyMongo(app)
 @app.route('/proxy/meetupmain', methods=['GET'])
 def do_proxy():
     args = request.url.split('?')[1]
-    res = req.get('https://api.meetup.com/2/events?key=163b1a1f7e132d77122c72f55111458&group_urlname=ny-tech&sign=true')
-    # res = req.get('http://api.meetup.com/find/groups?{}'.format(args))
+    #res = req.get('https://api.meetup.com/2/events?key=163b1a1f7e132d77122c72f55111458&group_urlname=ny-tech&sign=true')
+    res = req.get('https://api.meetup.com/2/groups?key=163b1a1f7e132d77122c72f55111458&sign=true&{}'.format(args)+'')
+    #test = "https://api.meetup.com/2/groups?key=163b1a1f7e132d77122c72f55111458&sign=true&photo-host=public&zip=94066&page=20"
     return res.text
 
 @app.route('/proxy/weather')
