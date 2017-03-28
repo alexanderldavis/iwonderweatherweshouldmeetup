@@ -11,6 +11,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script type="text/javascript" src="weathermeetup.js"></script>
     <script type="text/javascript" src="weathermeetup-controller.js"></script>
+	<style>
+      #map {
+        height: 400px;
+        width: 75%;
+        float: left;
+        margin: 1%;
+      }
+   </style>
   </head>
   <body>
     <h1>Welcome to I Wonder Weather We Should Meet Up</h1>
@@ -20,17 +28,22 @@
       <input type="text" id="city" name="city" value="">
       <label for="inputcity">State:</label>
       <select id="state" name="states" value=""></select>
+      <label for="activities">Categories</label>
+      <select id="category" name="category" value=""></select>
       <script type="text/javascript" src="states.js"></script>
       <button type="button" name="button" onclick="wc.getWeather()">Search</button>
     </div>
+    <div id="map"></div>
+      
     <div class="weather">
       <p>Here is what the weather like (maybe a function to fill in the data here)</p>
-      <ul id='weather_result'>
-      </ul>
+      <!-- <ul id='weather_result'>
+      </ul> -->
     </div>
     <div class="meetupsuggestion">
-      <p>Let us know what you are interested in (a drop down box right here to choose from the list of activity)</p>
-      <p>You should definitely try these place</p>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6I3gHL6hJikslDAMrftP4cErfsrlTe68&callback=wc.initMap"></script>
+    <script type="text/javascript" src='categories.js'></script>
+    <p>You should definitely try these place</p>
       <ul>
         <li>List of things/places to go</li>
       </ul>
