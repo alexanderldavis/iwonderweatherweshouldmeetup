@@ -39,11 +39,29 @@ class WeatherController{
   }
 
   getMeetups() {
+    var city = document.getElementById('city').value;
+    var state = document.getElementById('state').value;
+    var date = document.getElementById('date').value;
+
+
+    city = city.split(' ').join('_')
     $.ajax({
-      url: "http://localhost:8088/proxy/meetupmain?zip=94066&radius=1&category=25&order=members",
+      url: "http://maps.googleapis.com/maps/api/geocode/json?address="+city+"+"+state+"&sensor=true",
       method: "GET"
     }).done(function(data) {
-      //console.log(data);
+      var lon, lat;
+      lat = data.results[0].geometry.location.lat;
+      lon = data.results[0].geometry.location.lng;
+
+      $.ajax({
+        // url: "http://localhost:8088/proxy/meetupmain?zip=94066&radius=1&category=25&order=members",
+        //https://api.meetup.com/find/events?&sign=true&photo-host=public&lon=-122.28178&lat=37.9298239
+        //url: "http://localhost:8088/proxy/meetupmain?zip="+location+"&radius=1&order=members",
+        url: "http://localhost:8088/proxy/meetupmain?lon="+lon+"&lat="+lat+"&radius=1",
+        method: "GET"
+      }).done(function(data) {
+        console.log(data);
+      });
     });
   }
 }
