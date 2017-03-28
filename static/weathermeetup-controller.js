@@ -5,46 +5,62 @@ class WeatherController{
     var city=document.getElementById('city').value;
     return city;
   }
+
   getState(){
     var state=document.getElementById('state').value;
     return state;
   }
+
+  getCategory(){
+    var category=document.getElementById('category').value;
+    return category;
+  }
+
   getWeather() {
     var city=this.getCity();
-    var state=this.getState()
+    var state=this.getState();
+    self=this;
     $.ajax({
-      // url:"http://api.fixer.io/latest",
-      // url:"http://localhost:5000/proxy/mypuppy?i=onions,garlic&q=omelet&p=3",
       url:`http://localhost:8088/proxy/weather/${state}/${city}`,
       method:"GET"
     }).done(function(data){
-      wc.getMeetups();
+      self.getMeetups();
+      self.clearOldWeather();
       data=JSON.parse(data);
       console.log(data["current_observation"]);
       var result=data["current_observation"];
-      var ul=document.getElementById('weather_result');
-      for (let i of ['dewpoint_c','dewpoint_f','feelslike_c','feelslike_f']){
-        var text=result[i];
+      var div=document.getElementsByClassName('weather')[0];
+      var ul=document.createElement("ul");
+      let li1=document.createElement("li");
+      let url=result['icon_url'];
+      li1.style.listStyleImage=`url(${url})`;
+      li1.innerHTML="The weather is "+result['weather'];
+      ul.appendChild(li1);
+      for (let i of [{'name':'Temperature in C: ','res_name':'dewpoint_c'},{'name':'Temperature in F: ','res_name':'dewpoint_f'},{'name':'Feel like in C: ','res_name':'feelslike_c'},{'name':'Feel like in F: ','res_name':'feelslike_f'}]){
+        var text=result[i['res_name']];
         var li=document.createElement("li");
-        li.innerHTML=text;
+        li.innerHTML=i['name']+text;
         ul.appendChild(li);
       }
-      var div=document.getElementsByClassName('weather')[0];
-      var iframe=document.createElement("iframe");
-      iframe.src=result["forecast_url"];
-      iframe.height="20%";
-      iframe.width="80%";
-      div.appendChild(iframe);
+      div.appendChild(ul);
+      // var iframe=document.createElement("iframe");
+      // iframe.src=result["forecast_url"];
+      // iframe.height="20%";
+      // iframe.width="80%";
+      // div.appendChild(iframe);
     });
   }
-
+  clearOldWeather(){
+    var ul=document.getElementsByTagName('ul')[0];
+    if (ul)
+    ul.remove();
+  }
   getMeetups() {
-    var city = document.getElementById('city').value;
-    var state = document.getElementById('state').value;
-    var date = document.getElementById('date').value;
+    var city = this.getCity();
+    var state = this.getState();
+    var category=this.getCategory();
+    city = city.split(' ').join('_');
 
-
-    city = city.split(' ').join('_')
     $.ajax({
       url: "http://maps.googleapis.com/maps/api/geocode/json?address="+city+"+"+state+"&sensor=true",
       method: "GET"
