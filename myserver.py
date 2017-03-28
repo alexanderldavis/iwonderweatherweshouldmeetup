@@ -16,15 +16,11 @@ def do_proxy():
     # res = req.get('http://api.meetup.com/find/groups?{}'.format(args))
     return res.text
 
-<<<<<<< HEAD
 @app.route('/proxy/weather')
 def get_weather():
     args=request.url.split("?")[1]
-    res=req.get("https://query.yahooapis.com/v1/public/yql?"+args)
+    res=req.get("http://weathers.co/api.php?"+args)
     return res.text
-=======
 
-
->>>>>>> f15eb87404a7b99a8a3acc84d17ac04ee343302a
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=8088)
