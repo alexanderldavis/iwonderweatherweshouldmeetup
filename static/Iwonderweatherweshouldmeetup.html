@@ -20,18 +20,9 @@
       <input type="text" id="location" name="location" value="">
 
       <label for="inputdate">Date:</label>
-      <input type="text" id="date" name="date" value="">
-      <button type="button" name="button">Search</button>
+      <input type="date" id="date" name="date" value="">
+      <button type="button" name="button" onClick="WeatherController.getMeetups()">Search</button>
     </div>
-    <script type="text/javascript">
-        $.ajax({
-          // url:"http://api.fixer.io/latest",
-          // url:"http://localhost:5000/proxy/mypuppy?i=onions,garlic&q=omelet&p=3",
-          url:`http://localhost:5000/proxy/weather/?city=chicago `,
-          method:"GET"
-        }).done(function(data){
-          console.log(data);
-          }
     <div class="weather">
       <p>Here is what the weather like (maybe a function to fill in the data here)</p>
       <p>Let us know what you are interested in (a drop down box right here to choose from the list of activity)</p>
