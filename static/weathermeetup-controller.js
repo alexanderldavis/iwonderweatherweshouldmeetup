@@ -29,7 +29,12 @@ class WeatherController{
         li.innerHTML=text;
         ul.appendChild(li);
       }
-
+      var div=document.getElementsByClassName('weather')[0];
+      var iframe=document.createElement("iframe");
+      iframe.src=result["forecast_url"];
+      iframe.height="20%";
+      iframe.width="80%";
+      div.appendChild(iframe);
     });
   }
 
