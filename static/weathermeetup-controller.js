@@ -78,18 +78,23 @@ class WeatherController{
 
     var markers = [];
     var markernos = [];
+    var infowindows = [];
     for (var i=0; i<json1.length; i++) {
-    var position = {lat: json1[i].group.lat,
-                    lng: json1[i].group.lon};
-    markers[i] = new google.maps.Marker({
-        position: position,
-        map: map
+      var position = {lat: json1[i].group.lat,
+                      lng: json1[i].group.lon};
+      markers[i] = new google.maps.Marker({
+          position: position,
+          map: map
     	});
+      infowindows[i] = new google.maps.InfoWindow({
+        content: json1[i].group.name
+      });
 
     self = this;
     markernos[i] = i;
     let d = i;
     markers[i].addListener('click', function() {
+          infowindows[d].open(map, markers[d])
         	self.getInfo(json1[d]);
     		});
     	}
