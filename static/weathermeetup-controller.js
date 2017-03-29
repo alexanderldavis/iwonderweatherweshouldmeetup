@@ -30,6 +30,7 @@ class WeatherController{
       console.log(data["current_observation"]);
       var result=data["current_observation"];
       var div=document.getElementById('weather');
+      self.addP('weather','Here is what the weather like')
       var ul=document.createElement("ul");
       let li1=document.createElement("li");
       let url=result['icon_url'];
@@ -57,11 +58,12 @@ class WeatherController{
   }
 
   initMap() {
-	var uluru = {lat: 40.964946, lng: -103.08142};
+  	var uluru = {lat: 40.964946, lng: -103.08142};
     var map = new google.maps.Map(document.getElementById('map'), {
     	zoom: 4,
     	center: uluru
     });
+
   }
 
   addMarker(json) {
@@ -97,7 +99,14 @@ class WeatherController{
 	getInfo(markerno) {
 		console.log(markerno);
 	}
-
+  addP(id,text){
+    var div=document.getElementById(id);
+    var oldp=div.childNodes[0];
+    if (oldp) oldp.remove();
+    var p=document.createElement('p');
+    p.innerHTML=text;
+    div.appendChild(p);
+  }
   getMeetups() {
 	var city = this.getCity();
     var state = this.getState();
@@ -119,6 +128,8 @@ class WeatherController{
           url: "http://localhost:8088/proxy/meetupmain?lon="+lon+"&lat="+lat+"&radius=10&order=members",
           method: "GET"
         }).done(function(data) {
+          //add directions for users:
+          self.addP('directions',"<strong>Do you know that you can add the activity to the todo list of this page? </strong> Click on the marker on the map and you'll see the magic")
           //this is the json of all the data from the meetup function callback
           //map stuff should go here
           self.addMarker(data);

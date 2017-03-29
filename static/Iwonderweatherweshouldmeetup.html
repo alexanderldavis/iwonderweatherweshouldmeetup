@@ -37,12 +37,13 @@
       <button type="button" name="button" onclick="wc.getWeather()">Search</button>
     </div>
 
-    <div class="container" id="weather">
-      <p>Here is what the weather like (maybe a function to fill in the data here)</p>
-      <!-- <ul id='weather_result'>
-      </ul> -->
-    </div>
+    <div class="container" id="weather"></div>
+    <div class="container" id="directions"></div>
     <div class="container" id="map"></div>
+    <div class="container" id="todolist">
+      <table>
+        <tr></tr>
+      </table>
     </div>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6I3gHL6hJikslDAMrftP4cErfsrlTe68&callback=wc.initMap"></script>
     <script type="text/javascript" src='categories.js'></script>
