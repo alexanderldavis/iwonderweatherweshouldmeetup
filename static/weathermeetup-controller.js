@@ -70,7 +70,7 @@ class WeatherController{
       var position = {lat: json1[0].group.lat,
                       lng: json1[0].group.lon};
       var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 2,
+          zoom: 10,
           center: position
       });
 
