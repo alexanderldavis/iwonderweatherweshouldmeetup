@@ -56,7 +56,7 @@ class WeatherController{
     ul.remove();
   }
 
-  	initMap() {
+  initMap() {
       var uluru = {lat: 40.964946, lng: -103.08142};
       var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 4,
@@ -85,28 +85,12 @@ class WeatherController{
       }
 
       console.log(markers);
-
-  getMeetups() {
-    var city = this.getCity();
+	}
+    getMeetups() {
+	var city = this.getCity();
     var state = this.getState();
     var category=this.getCategory();
     city = city.split(' ').join('_');
-
-    $.ajax({
-      url: "http://maps.googleapis.com/maps/api/geocode/json?address="+city+"+"+state+"&sensor=true",
-      method: "GET"
-    }).done(function(data) {
-      var lon, lat;
-      lat = data.results[0].geometry.location.lat;
-      lon = data.results[0].geometry.location.lng;
-    }
-
-
-    getMeetups() {
-      var city = document.getElementById('city').value;
-      var state = document.getElementById('state').value;
-      //var date = document.getElementById('date').value;
-      var self = this;
       city = city.split(' ').join('_')
       $.ajax({
         url: "http://maps.googleapis.com/maps/api/geocode/json?address="+city+"+"+state+"&sensor=true",
