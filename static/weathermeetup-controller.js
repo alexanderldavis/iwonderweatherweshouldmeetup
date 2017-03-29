@@ -57,36 +57,48 @@ class WeatherController{
   }
 
   initMap() {
-      var uluru = {lat: 40.964946, lng: -103.08142};
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
-        center: uluru
-      });
-    }
+	var uluru = {lat: 40.964946, lng: -103.08142};
+    var map = new google.maps.Map(document.getElementById('map'), {
+    	zoom: 4,
+    	center: uluru
+    });
+  }
 
-    addMarker(json) {
-      var json1 = JSON.parse(json);
-      console.log(json1);
-      var position = {lat: json1[0].group.lat,
-                      lng: json1[0].group.lon};
-      var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 10,
-          center: position
-      });
+  addMarker(json) {
+    var json1 = JSON.parse(json);
+    console.log(json1);
+    var position = {lat: json1[0].group.lat,
+                    lng: json1[0].group.lon};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 10,
+      center: position
+    	});
 
-      var markers = []
-      for (var i=0; i<json1.length; i++) {
-        var position = {lat: json1[i].group.lat,
-                        lng: json1[i].group.lon};
-        markers[i] = new google.maps.Marker({
-          position: position,
-          map: map
-        });
-      }
+    var markers = [];
+    var markernos = [];
+    for (var i=0; i<json1.length; i++) {
+    var position = {lat: json1[i].group.lat,
+                    lng: json1[i].group.lon};
+    markers[i] = new google.maps.Marker({
+        position: position,
+        map: map
+    	});
 
-      console.log(markers);
+    self = this;
+    markernos[i] = i;
+    let d = i;
+    markers[i].addListener('click', function() {
+        	self.getInfo(json1[d]);
+    		});
+    	}
+    console.log(markers);
 	}
-    getMeetups() {
+
+	getInfo(markerno) {
+		console.log(markerno);
+	}
+
+  getMeetups() {
 	var city = this.getCity();
     var state = this.getState();
     var category=this.getCategory();
