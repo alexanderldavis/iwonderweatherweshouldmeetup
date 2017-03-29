@@ -29,7 +29,7 @@ class WeatherController{
       data=JSON.parse(data);
       console.log(data["current_observation"]);
       var result=data["current_observation"];
-      var div=document.getElementsByClassName('weather')[0];
+      var div=document.getElementById('weather');
       var ul=document.createElement("ul");
       let li1=document.createElement("li");
       let url=result['icon_url'];
