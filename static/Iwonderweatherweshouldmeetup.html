@@ -2,7 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>I wonder weather we should meet up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>I wonder weather we should meetup</title>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -11,19 +12,21 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script type="text/javascript" src="weathermeetup.js"></script>
     <script type="text/javascript" src="weathermeetup-controller.js"></script>
-	<style>
-      #map {
-        height: 400px;
-        width: 75%;
-        float: left;
-        margin: 1%;
-      }
-   </style>
+  	<style>
+        #map {
+          height: 400px;
+          width: 75%;
+          float: center;
+          margin-left: 9%;
+        }
+     </style>
   </head>
   <body>
     <h1>Welcome to I Wonder Weather We Should Meet Up</h1>
-    <p>Tell us where you are going to and we will tell you what is going on at that city</p>
-    <div class="location">
+    <div class="container">
+        <p>Tell us where you are going to and we will tell you what is going on at that city</p>
+    </div>
+    <div class="container" id="location">
       <label for="inputcity">City:</label>
       <input type="text" id="city" name="city" value="">
       <label for="inputcity">State:</label>
@@ -33,20 +36,16 @@
       <script type="text/javascript" src="states.js"></script>
       <button type="button" name="button" onclick="wc.getWeather()">Search</button>
     </div>
-    <div id="map"></div>
 
-    <div class="weather">
+    <div class="container" id="weather">
       <p>Here is what the weather like (maybe a function to fill in the data here)</p>
       <!-- <ul id='weather_result'>
       </ul> -->
     </div>
-    <div class="meetupsuggestion"></div>
+    <div class="container" id="map"></div>
+    </div>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6I3gHL6hJikslDAMrftP4cErfsrlTe68&callback=wc.initMap"></script>
     <script type="text/javascript" src='categories.js'></script>
-    <p>You should definitely try these place</p>
-      <ul>
-        <li>List of things/places to go</li>
-      </ul>
-    </div>
+
   </body>
 </html>

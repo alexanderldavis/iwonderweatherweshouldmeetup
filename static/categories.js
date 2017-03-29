@@ -118,7 +118,13 @@ var category=[
   "sort_name": "New Age & Spirituality",
   "id": 22,
   "shortname": "Spirituality"
-  }
+},
+{
+  "name": "All Category",
+  "sort_name": "All",
+  "id": 23,
+  "shortname": "All"
+}
 ]
 var categorySelect = document.getElementById("category");
 
