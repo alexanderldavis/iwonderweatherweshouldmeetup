@@ -1,4 +1,4 @@
-# iwonderweatherweshouldmeetup
+# IWWWSM v1
 I Wonder Weather we Should Meetup v1
 (API Mashup)
 
