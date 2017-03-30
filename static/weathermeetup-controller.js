@@ -69,8 +69,8 @@ class WeatherController{
   addMarker(json) {
     var json1 = JSON.parse(json);
     console.log(json1);
-    var position = {lat: json1[0].group.lat,
-                    lng: json1[0].group.lon};
+    var position = {lat: json1.results[0].lat,
+                    lng: json1.results[0].lon};
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
       center: position
@@ -79,15 +79,19 @@ class WeatherController{
     var markers = [];
     var markernos = [];
     var infowindows = [];
-    for (var i=0; i<json1.length; i++) {
-      var position = {lat: json1[i].group.lat,
-                      lng: json1[i].group.lon};
+    for (var i=0; i<json1.results.length; i++) {
+      var position = {lat: json1.results[i].lat,
+                      lng: json1.results[i].lon};
       markers[i] = new google.maps.Marker({
           position: position,
           map: map
     	});
+
+      var contentString = '<h3>'+json1.results[i].name+'</h3>' +
+                          json1.results[i].description
+
       infowindows[i] = new google.maps.InfoWindow({
-        content: json1[i].group.name
+        content: contentString
       });
 
     self = this;
@@ -95,7 +99,7 @@ class WeatherController{
     let d = i;
     markers[i].addListener('click', function() {
           infowindows[d].open(map, markers[d])
-        	self.getInfo(json1[d]);
+        	self.getInfo(json1.results[d]);
     		});
     	}
     console.log(markers);
@@ -125,20 +129,42 @@ class WeatherController{
         var lon, lat;
         lat = data.results[0].geometry.location.lat;
         lon = data.results[0].geometry.location.lng;
-        $.ajax({
-          // url: "http://localhost:8088/proxy/meetupmain?zip=94066&radius=1&category=25&order=members",
-          //https://api.meetup.com/find/events?&sign=true&photo-host=public&lon=-122.28178&lat=37.9298239
-          //url: "http://localhost:8088/proxy/meetupmain?zip="+location+"&radius=1&order=members",
-          //url: "http://localhost:8088/proxy/meetupmain?lon="+lon+"&lat="+lat+"&radius=1&oder=members",
-          url: "http://localhost:8088/proxy/meetupmain?lon="+lon+"&lat="+lat+"&radius=10&order=members",
-          method: "GET"
-        }).done(function(data) {
-          //add directions for users:
-          self.addP('directions',"<strong>Do you know that you can add the activity to the todo list of this page? </strong> Click on the marker on the map and you'll see the magic")
-          //this is the json of all the data from the meetup function callback
-          //map stuff should go here
-          self.addMarker(data);
-        });
+        if (category < 1) {
+          $.ajax({
+            // url: "http://localhost:8088/proxy/meetupmain?zip=94066&radius=1&category=25&order=members",
+            //https://api.meetup.com/find/events?&sign=true&photo-host=public&lon=-122.28178&lat=37.9298239
+            //url: "http://localhost:8088/proxy/meetupmain?zip="+location+"&radius=1&order=members",
+            //url: "http://localhost:8088/proxy/meetupmain?lon="+lon+"&lat="+lat+"&radius=1&oder=members",
+            url: "http://localhost:8088/proxy/meetupmain?photo-host=public&lat="+lat+"&lon="+lon,
+
+            method: "GET"
+          }).done(function(data) {
+            //add directions for users:
+            self.addP('directions',"<strong>Do you know that you can add the activity to the todo list of this page? </strong> Click on the marker on the map and you'll see the magic")
+            //this is the json of all the data from the meetup function callback
+            //map stuff should go here
+            self.addMarker(data);
+          });
+        } else {
+          $.ajax({
+            // url: "http://localhost:8088/proxy/meetupmain?zip=94066&radius=1&category=25&order=members",
+            //https://api.meetup.com/find/events?&sign=true&photo-host=public&lon=-122.28178&lat=37.9298239
+            //url: "http://localhost:8088/proxy/meetupmain?zip="+location+"&radius=1&order=members",
+            //url: "http://localhost:8088/proxy/meetupmain?lon="+lon+"&lat="+lat+"&radius=1&oder=members",
+            url: "http://localhost:8088/proxy/meetupmain?photo-host=public&lat="+lat+"&lon="+lon+"&category_id="+category+"&page=20",
+
+            method: "GET"
+          }).done(function(data) {
+            //add directions for users:
+            self.addP('directions',"<strong>Do you know that you can add the activity to the todo list of this page? </strong> Click on the marker on the map and you'll see the magic")
+            //this is the json of all the data from the meetup function callback
+            //map stuff should go here
+            self.addMarker(data);
+          });
+      }
+
+
+
       });
     }
 }
