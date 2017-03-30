@@ -43,7 +43,7 @@ class WeatherController{
       // li1.style.listStyleImage=`url(${url})`;
       li1.innerHTML="<img style='width: 50px;' src='"+url+"'</img>";
       ul.appendChild(li1);
-      for (let i of [{'name':'&deg;C','res_name':'dewpoint_c'},{'name':'&deg;F','res_name':'dewpoint_f'},{'name':'&deg;C (realFeel)','res_name':'feelslike_c'},{'name':'&deg;F (realFeel)','res_name':'feelslike_f'},{'name':'in precipitation today','res_name':'precip_today_in'},{'name':' mph wind','res_name':'wind_mph'},{'name':' humidity','res_name':'relative_humidity'}]){
+      for (let i of [{'name':'&deg;C','res_name':'dewpoint_c'},{'name':'&deg;F','res_name':'dewpoint_f'},{'name':'&deg;C (realFeel)','res_name':'feelslike_c'},{'name':'&deg;F (realFeel)','res_name':'feelslike_f'},{'name':'in precip','res_name':'precip_today_in'},{'name':' mph wind','res_name':'wind_mph'},{'name':' humidity','res_name':'relative_humidity'}]){
         var text=result[i['res_name']];
         var li=document.createElement("li");
         li.innerHTML=text+i['name'];
@@ -106,14 +106,20 @@ class WeatherController{
     let d = i;
     markers[i].addListener('click', function() {
           infowindows[d].open(map, markers[d])
-        	self.getInfo(json1.results[d]);
-          document.getElementById("addTodo").onclick=function(){wc.addTodoList(json1.results[d],document.getElementById('state').value);};
+        	//self.getInfo(json1.results[d]);
+          //document.getElementById("addTodo").onclick=function(){wc.addTodoList(json1.results[d],document.getElementById('state').value);};
+          document.getElementById("addTodo").onclick=function(){self.getInfo(json1.results[d]);};
     		});
     	}
     // console.log(markers);
 	}
 
 	getInfo(markerno) {
+    var table = document.getElementById('todoList');
+    var newRow = table.insertRow(table.rows.length);
+    var newCell = newRow.insertCell(0);
+    var newText = document.createTextNode(markerno.name);
+    newCell.appendChild(newText);
 		console.log(markerno);
 	}
   addTodoList(data,state){
