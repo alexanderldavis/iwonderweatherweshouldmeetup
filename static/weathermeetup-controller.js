@@ -30,18 +30,23 @@ class WeatherController{
       console.log(data["current_observation"]);
       var result=data["current_observation"];
       var div=document.getElementById('weather');
-      self.addP('weather','Here is what the weather is like in '+city+', '+state+'!')
+      self.addP('weather','<p style="margin-top: 1%; margin-left: 12.5%; text-align: left; color: rgb(189, 197, 213);">Here is what the weather is like in '+city+', '+state+'!</p>')
       var ul=document.createElement("ul");
-      ul.setAttribute('class','list-inline')
+      ul.setAttribute('class','list-inline');
+      ul.style.backgroundColor = "white"
+      ul.style.textAlign = "center"
+      ul.style.marginLeft = "12.5%"
+      ul.style.marginRight = "12.5%"
+      ul.style.width = "75%"
       let li1=document.createElement("li");
       let url=result['icon_url'];
       // li1.style.listStyleImage=`url(${url})`;
       li1.innerHTML="<img style='width: 50px;' src='"+url+"'</img>";
       ul.appendChild(li1);
-      for (let i of [{'name':'Temperature in C: ','res_name':'dewpoint_c'},{'name':'Temperature in F: ','res_name':'dewpoint_f'},{'name':'Feel like in C: ','res_name':'feelslike_c'},{'name':'Feel like in F: ','res_name':'feelslike_f'}]){
+      for (let i of [{'name':'&deg;C','res_name':'dewpoint_c'},{'name':'&deg;F','res_name':'dewpoint_f'},{'name':'&deg;C (realFeel)','res_name':'feelslike_c'},{'name':'&deg;F (realFeel)','res_name':'feelslike_f'},{'name':'in precipitation today','res_name':'precip_today_in'},{'name':' mph wind','res_name':'wind_mph'},{'name':' humidity','res_name':'relative_humidity'}]){
         var text=result[i['res_name']];
         var li=document.createElement("li");
-        li.innerHTML=i['name']+text;
+        li.innerHTML=text+i['name'];
         ul.appendChild(li);
       }
       div.appendChild(ul);
