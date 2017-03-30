@@ -30,7 +30,7 @@ class WeatherController{
       console.log(data["current_observation"]);
       var result=data["current_observation"];
       var div=document.getElementById('weather');
-      self.addP('weather','<p style="margin-top: 1%; margin-left: 12.5%; text-align: left; color: rgb(189, 197, 213);">Here is what the weather is like in '+city+', '+state+'!</p>')
+      self.addP('weather','<p style="margin-top: 1%; margin-left: 32%; text-align: left; color: rgb(189, 197, 213);">Here is what the weather is like in '+city+', '+state+'!</p>')
       var ul=document.createElement("ul");
       ul.setAttribute('class','list-inline');
       ul.style.backgroundColor = "white"
@@ -74,7 +74,7 @@ class WeatherController{
 
   addMarker(json) {
     var json1 = JSON.parse(json);
-    console.log(json1);
+    // console.log(json1);
     var position = {lat: json1.results[0].lat,
                     lng: json1.results[0].lon};
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -92,9 +92,10 @@ class WeatherController{
           position: position,
           map: map
     	});
-
+      var object=json1.results[i];
       var contentString = '<h3>'+json1.results[i].name+'</h3>' +
-                          json1.results[i].description
+                          json1.results[i].description+
+                          '<button type="button" name="button" id="addTodo">Add to todo list</button>';
 
       infowindows[i] = new google.maps.InfoWindow({
         content: contentString
@@ -106,21 +107,24 @@ class WeatherController{
     markers[i].addListener('click', function() {
           infowindows[d].open(map, markers[d])
         	self.getInfo(json1.results[d]);
+          document.getElementById("addTodo").onclick=function(){wc.addTodoList(json1.results[d],document.getElementById('state').value);};
     		});
     	}
-    console.log(markers);
+    // console.log(markers);
 	}
 
 	getInfo(markerno) {
 		console.log(markerno);
 	}
+  addTodoList(data,state){
+    console.log("hello");
+    var item=new TodoItem(data['city'],state,data['description'],data['link'])
+  }
   addP(id,text){
     var div=document.getElementById(id);
     var oldp=div.childNodes[0];
     if (oldp) oldp.remove();
-    var p=document.createElement('p');
-    p.innerHTML=text;
-    div.appendChild(p);
+    div.innerHTML=text;
   }
   getMeetups() {
 	var city = this.getCity();
@@ -145,7 +149,7 @@ class WeatherController{
             method: "GET"
           }).done(function(data) {
             //add directions for users:
-            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong> Just click 'Add to ToDo' in the marker bubble on the map!</p>")
+            self.addP('directions',"<p style='text-align: left; margin-left:32%; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong> Just click 'Add to ToDo' in the marker bubble on the map!</p>")
             //this is the json of all the data from the meetup function callback
             //map stuff should go here
             self.addMarker(data);
@@ -161,7 +165,7 @@ class WeatherController{
             method: "GET"
           }).done(function(data) {
             //add directions for users:
-            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong> Just click 'Add to ToDo' in the marker bubble on the map!</p>")
+            self.addP('directions',"<p'><strong>Do you know that you can add the activity to the ToDo list below? </strong></p><p>Click 'Add to ToDo' in the marker bubble on the map!</p>")
             //this is the json of all the data from the meetup function callback
             //map stuff should go here
             self.addMarker(data);
