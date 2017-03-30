@@ -31,7 +31,7 @@ class WeatherController{
       console.log(data["current_observation"]);
       var result=data["current_observation"];
       var div=document.getElementById('weather');
-      self.addP('weather','<p style="margin-top: 1%; text-align: left; color: rgb(189, 197, 213);">Here is what the weather is like in '+city+', '+state+'!</p>')
+      self.addP('weather','<p style="margin-top: 1%; text-align: center; color: rgb(189, 197, 213);">Here is what the weather is like in '+city+', '+state+'!</p>')
       var ul=document.createElement("ul");
       ul.setAttribute('class','list-inline');
       ul.style.backgroundColor = "white"
@@ -191,6 +191,6 @@ class WeatherController{
         table.appendChild(act.toTableRow());
       }
     }
-    
+
 }
 var wc = new WeatherController();
