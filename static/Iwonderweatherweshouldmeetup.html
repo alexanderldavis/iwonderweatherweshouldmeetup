@@ -12,51 +12,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script type="text/javascript" src="weathermeetup.js"></script>
     <script type="text/javascript" src="weathermeetup-controller.js"></script>
-  	<style>
-        html, body {
-          background-color: rgb(64, 82, 124);
-        }
-        #map {
-          height: 500px;
-          width: 75%;
-          float: center;
-          margin-left: 12.5%;
-          margin-right: 12.5%;
-          margin-top: 1%;
-          border-style: outset;
-        }
-
-        #maininput {
-          text-align: center;
-        }
-
-        #secondaryheader {
-          text-align: center;
-          color: rgb(189, 197, 213);
-        }
-
-        #mainheader {
-          text-align: center;
-          text-shadow: 1px 1px 2px black;
-          color: rgb(189, 197, 213);
-        }
-        
-        #mainfooter {
-          text-align: center;
-        }
-
-        #mainparagraph {
-          text-align: center;
-          color: rgb(189, 197, 213);
-        }
-     </style>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <h1 id="mainheader">Welcome to IWWWSM!</h1>
     <h5 title="I know, we're so funny aren't we!? ;)" id="secondaryheader">( <u>I</u> <u>W</u>ONDER <u>W</u>EATHER <u>W</u>E <u>S</u>HOULD <u>M</u>EETUP )</h5>
 
     <div class="container">
-      <p id="mainparagraph">Tell us where you are going and we will tell you what is going on!</p>
+      <p id="mainparagraph" style="text-align:left; margin-left:32%">Tell us where you are going and we will tell you what is going on!</p>
     </div>
 
     <form class="form-inline" id="maininput">
@@ -76,6 +39,7 @@
       </div>
 
       <script type="text/javascript" src="states.js"></script>
+      <script type="text/javascript" src="categories.js"></script>
 
       <button class="btn btn-default" type="button" name="button" onclick="wc.getWeather()">Search</button>
     </form>
@@ -83,15 +47,27 @@
     <div class="container" id="weather"></div>
     <div class="container" id="directions"></div>
     <div class="container" id="map"></div>
-    <table id = "maintable"></table>
     <div class="container" id="todolist">
+      <table>
+        <tr></tr>
+      </table>
     </div>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6I3gHL6hJikslDAMrftP4cErfsrlTe68&callback=wc.initMap"></script>
-    <script type="text/javascript" src='categories.js'></script>
 
+    <div class="container">
+          <table class="table table-striped" id="todoList">
+              <tr>
+                  <th id='actCity'>Date <i class="fa fa-fw fa-sort" aria-hidden="true" ></i></th>
+                  <th id='actState'>Store<i class="fa fa-fw fa-sort" aria-hidden="true" ></i></th>
+                  <th id='actDes'>Category<i class="fa fa-fw fa-sort" aria-hidden="true"></i></th>
+                  <th id='actLink'>Item<i class="fa fa-fw fa-sort" aria-hidden="true"></i></th>
+                  <td></td>
+              </tr>
+          </table>
+      </div>
   </body>
 
   <footer>
-    <p id="mainfooter">&copy; IWWWSM. Lihn Nguyen & Alex Davis</p>
+    <p id="mainfooter">&copy; IWWWSM. Linh Nguyen & Alex Davis</p>
   </footer>
 </html>
