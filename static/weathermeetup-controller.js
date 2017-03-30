@@ -1,5 +1,6 @@
 class WeatherController{
   constructor(){
+    this.db=new TodoItemDB();
   }
   getCity(){
     var city=document.getElementById('city').value;
@@ -114,34 +115,6 @@ class WeatherController{
     // console.log(markers);
 	}
 
-	getInfo(markerno) {
-    var table = document.getElementById('todoList');
-    var newRow = table.insertRow(table.rows.length);
-    var newCell0 = newRow.insertCell(0);
-    var newText0 = document.createTextNode(markerno.id);
-    var newCell1 = newRow.insertCell(1);
-    var newText1 = document.createTextNode(markerno.name);
-    var newCell15 = newRow.insertCell(2);
-    var newText15 = document.createTextNode(markerno.category.name);
-    var newCell2 = newRow.insertCell(3);
-    var newText2 = document.createTextNode(markerno.city);
-    var newCell3 = newRow.insertCell(4);
-    var newLink = document.createElement('a');
-    var linkText = document.createTextNode("See More!")
-    newLink.append(linkText);
-    newLink.title = markerno.link;
-    newLink.href = markerno.link;
-    newCell0.appendChild(newText0);
-    newCell1.appendChild(newText1);
-    newCell15.appendChild(newText15);
-    newCell2.appendChild(newText2);
-    newCell3.appendChild(newLink);
-		console.log(markerno);
-	}
-  addTodoList(data,state){
-    console.log("hello");
-    var item=new TodoItem(data['city'],state,data['description'],data['link'])
-  }
   addP(id,text){
     var div=document.getElementById(id);
     var oldp=div.childNodes[0];
@@ -149,7 +122,7 @@ class WeatherController{
     div.innerHTML=text;
   }
   getMeetups() {
-	var city = this.getCity();
+	  var city = this.getCity();
     var state = this.getState();
     var category=this.getCategory();
     city = city.split(' ').join('_');
@@ -193,10 +166,31 @@ class WeatherController{
             self.addMarker(data);
           });
       }
-
-
-
       });
     }
+
+    addTodoList(data,state){
+      var item=new TodoItem(data['name'],data['city'],state,data['category']['name'],data['description'],data['link']);
+      //add item into the database
+      this.db.addTodoList(item);
+      //redraw the table everytime an item is added
+      this.redrawTable();
+    }
+
+    redrawTable(){
+      //redraw the table when any changes are made
+      var table=document.getElementById("todoList");
+      let rows = table.getElementsByTagName('tr')
+
+      //delete rows on the table to redraw again
+      for (let i = 0; rows.length > 1; i++) {
+          rows[1].remove();
+      }
+      //add item on the database to the list
+      for (let act of this.db.getTodoListDB){
+        table.appendChild(act.toTableRow());
+      }
+    }
+    
 }
 var wc = new WeatherController();
