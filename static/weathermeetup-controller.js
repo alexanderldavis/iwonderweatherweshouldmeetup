@@ -121,9 +121,11 @@ class WeatherController{
     var newText0 = document.createTextNode(markerno.id);
     var newCell1 = newRow.insertCell(1);
     var newText1 = document.createTextNode(markerno.name);
-    var newCell2 = newRow.insertCell(2);
+    var newCell15 = newRow.insertCell(2);
+    var newText15 = document.createTextNode(markerno.category.name);
+    var newCell2 = newRow.insertCell(3);
     var newText2 = document.createTextNode(markerno.city);
-    var newCell3 = newRow.insertCell(3);
+    var newCell3 = newRow.insertCell(4);
     var newLink = document.createElement('a');
     var linkText = document.createTextNode("See More!")
     newLink.append(linkText);
@@ -131,6 +133,7 @@ class WeatherController{
     newLink.href = markerno.link;
     newCell0.appendChild(newText0);
     newCell1.appendChild(newText1);
+    newCell15.appendChild(newText15);
     newCell2.appendChild(newText2);
     newCell3.appendChild(newLink);
 		console.log(markerno);
