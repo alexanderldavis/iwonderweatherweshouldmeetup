@@ -97,7 +97,8 @@ class WeatherController{
                           json1.results[i].description
 
       infowindows[i] = new google.maps.InfoWindow({
-        content: contentString
+        content: contentString,
+        maxWidth: 300
       });
 
     self = this;
@@ -105,14 +106,19 @@ class WeatherController{
     let d = i;
     markers[i].addListener('click', function() {
           infowindows[d].open(map, markers[d])
-        	self.getInfo(json1.results[d]);
+        	self.makeTable(json1.results[d]);
     		});
     	}
     console.log(markers);
 	}
 
-	getInfo(markerno) {
-		console.log(markerno);
+	makeTable(jsonresults) {
+		console.log(jsonresults);
+    var headertablerow = document.createElement('tr');
+    var headName = document.createElement('th');
+    headName.value = "Name";
+    headertablerow.appendChild(headName);
+    document.getElementById("maintable").appendChild(headertablerow);
 	}
   addP(id,text){
     var div=document.getElementById(id);
