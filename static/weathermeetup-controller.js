@@ -30,12 +30,13 @@ class WeatherController{
       console.log(data["current_observation"]);
       var result=data["current_observation"];
       var div=document.getElementById('weather');
-      self.addP('weather','Here is what the weather like')
+      self.addP('weather','Here is what the weather is like in '+city+', '+state+'!')
       var ul=document.createElement("ul");
+      ul.setAttribute('class','list-inline')
       let li1=document.createElement("li");
       let url=result['icon_url'];
-      li1.style.listStyleImage=`url(${url})`;
-      li1.innerHTML="The weather is "+result['weather'];
+      // li1.style.listStyleImage=`url(${url})`;
+      li1.innerHTML="<img style='width: 50px;' src='"+url+"'</img>";
       ul.appendChild(li1);
       for (let i of [{'name':'Temperature in C: ','res_name':'dewpoint_c'},{'name':'Temperature in F: ','res_name':'dewpoint_f'},{'name':'Feel like in C: ','res_name':'feelslike_c'},{'name':'Feel like in F: ','res_name':'feelslike_f'}]){
         var text=result[i['res_name']];
@@ -121,7 +122,6 @@ class WeatherController{
     var state = this.getState();
     var category=this.getCategory();
     city = city.split(' ').join('_');
-      city = city.split(' ').join('_')
       $.ajax({
         url: "http://maps.googleapis.com/maps/api/geocode/json?address="+city+"+"+state+"&sensor=true",
         method: "GET"
@@ -140,7 +140,7 @@ class WeatherController{
             method: "GET"
           }).done(function(data) {
             //add directions for users:
-            self.addP('directions',"<strong>Do you know that you can add the activity to the todo list of this page? </strong> Click on the marker on the map and you'll see the magic")
+            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong> Just click 'Add to ToDo' in the marker bubble on the map!</p>")
             //this is the json of all the data from the meetup function callback
             //map stuff should go here
             self.addMarker(data);
@@ -156,7 +156,7 @@ class WeatherController{
             method: "GET"
           }).done(function(data) {
             //add directions for users:
-            self.addP('directions',"<strong>Do you know that you can add the activity to the todo list of this page? </strong> Click on the marker on the map and you'll see the magic")
+            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong> Just click 'Add to ToDo' in the marker bubble on the map!</p>")
             //this is the json of all the data from the meetup function callback
             //map stuff should go here
             self.addMarker(data);
