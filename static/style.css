@@ -33,6 +33,15 @@ html, body {
   text-align: center;
   color: rgb(189, 197, 213);
 }
+
+#todoList {
+  text-align:center;
+  width: 80%;
+  float: center;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 1%;
+}
 /*p {
   margin-top: 1%;
   margin-left: 32%;
