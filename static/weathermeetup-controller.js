@@ -150,7 +150,7 @@ class WeatherController{
             method: "GET"
           }).done(function(data) {
             //add directions for users:
-            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong> Just click 'Add to ToDo' in the marker bubble on the map!</p>")
+            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong> <br>Click 'Add to ToDo' in the marker bubble on the map!</p>")
             //this is the json of all the data from the meetup function callback
             //map stuff should go here
             self.addMarker(data);
@@ -166,7 +166,7 @@ class WeatherController{
             method: "GET"
           }).done(function(data) {
             //add directions for users:
-            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong></p><p>Click 'Add to ToDo' in the marker bubble on the map!</p>")
+            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong><br>Click 'Add to ToDo' in the marker bubble on the map!</p>")
             //this is the json of all the data from the meetup function callback
             //map stuff should go here
             self.addMarker(data);
@@ -176,7 +176,8 @@ class WeatherController{
     }
 
     addTodoList(data,state){
-      var item=new TodoItem(data['name'],data['city'],state,data['category']['name'],data['description'],data['link']);
+      var description=data['description'].split('.')[0]
+      var item=new TodoItem(data['name'],data['city'],state,data['category']['name'],description,data['link']);
       //add item into the database
       this.db.addTodoList(item);
       //redraw the table everytime an item is added

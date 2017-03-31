@@ -11,7 +11,13 @@ class TodoItem{
     var row=document.createElement('tr');
     for (let cell of ['name','city','state','category','description','link']){
       let td=document.createElement('td');
-      td.innerHTML=this[cell];
+      if (cell=="link"){
+         let a=document.createElement('a');
+         a.href=this[cell];
+         a.innerHTML="More details on event"
+         td.appendChild(a);
+      }
+     else  td.innerHTML=this[cell];
       row.appendChild(td);
     }
     //create delete button
