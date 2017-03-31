@@ -37,11 +37,11 @@ class TodoItemDB{
   constructor(){
     this.db=[]
   }
-  addTodoList(expense){
+  addTodoList(item){
     //add item to  the database
     this.db.push(item);
     //add item to local storage
-    this.saveMe(item);
+    this.saveItem(item);
   }
   saveItem(item){
     //add item to localStorage

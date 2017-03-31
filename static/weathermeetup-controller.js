@@ -102,19 +102,25 @@ class WeatherController{
         content: contentString
       });
 
-    self = this;
-    markernos[i] = i;
-    let d = i;
-    markers[i].addListener('click', function() {
-          infowindows[d].open(map, markers[d])
-        	//self.getInfo(json1.results[d]);
-          //document.getElementById("addTodo").onclick=function(){wc.addTodoList(json1.results[d],document.getElementById('state').value);};
-          document.getElementById("addTodo").onclick=function(){self.getInfo(json1.results[d]);};
-    		});
+      self = this;
+      markernos[i] = i;
+      let d = i;
+      markers[i].addListener('click', function() {
+            self.close_popups(infowindows);
+            infowindows[d].open(map, markers[d])
+          	//self.getInfo(json1.results[d]);
+            document.getElementById("addTodo").onclick=function(){wc.addTodoList(json1.results[d],document.getElementById('state').value);};
+            //document.getElementById("addTodo").onclick=function(){self.getInfo(json1.results[d]);};
+      		});
     	}
+
     // console.log(markers);
 	}
-
+  close_popups(infowindows){
+    for(var i = 0; i<infowindows.length; i++){
+      infowindows[i].close();
+    }
+  }
   addP(id,text){
     var div=document.getElementById(id);
     var oldp=div.childNodes[0];
@@ -187,7 +193,7 @@ class WeatherController{
           rows[1].remove();
       }
       //add item on the database to the list
-      for (let act of this.db.getTodoListDB){
+      for (let act of this.db.getTodoListDB()){
         table.appendChild(act.toTableRow());
       }
     }
