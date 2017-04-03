@@ -47,12 +47,20 @@ class TodoItemDB{
     //add item to  the database
     this.db.push(item);
     //add item to local storage
-    this.saveItem(item);
+    this.saveItem();
   }
-  saveItem(item){
+  saveItem(){
     //add item to localStorage
+    localStorage.activitydb=JSON.stringify(this.db);
   }
   getTodoListDB(){
     return this.db
+  }
+  reloadMe(){
+    let obs = JSON.parse(localStorage.activitydb);
+    for(let act of obs) {
+         act = new TodoItem(act.name, act.city, act.state, act.category,(act.description.split('.'))[0], act.link);
+         this.db.push(act);
+     }
   }
 }

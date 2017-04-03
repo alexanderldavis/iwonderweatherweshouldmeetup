@@ -154,6 +154,7 @@ class WeatherController{
             //this is the json of all the data from the meetup function callback
             //map stuff should go here
             self.addMarker(data);
+            self.listActivity(data);
           });
         } else {
           $.ajax({
@@ -170,11 +171,30 @@ class WeatherController{
             //this is the json of all the data from the meetup function callback
             //map stuff should go here
             self.addMarker(data);
+            self.listActivity(data);
           });
       }
       });
     }
+    listActivity(data){
+      // remove old list of activity
+      let div=document.getElementById('listActivity');
+      let oldul=div.childNodes[0];
+      if (oldul) oldul.remove();
+      //add new list of activity
+      data=JSON.parse(data);
+      data=data['results'];
 
+      let ul=document.createElement('ul');
+      for (let act of data){
+        console.log(act);
+        let li=document.createElement('li');
+        li.innerHTML=act['name'];
+        li.color="rgb(189, 197, 213)";
+        ul.appendChild(li);
+      }
+      div.appendChild(ul);
+    }
     addTodoList(data,state){
       var description=data['description'].split('.')[0]
       var item=new TodoItem(data['name'],data['city'],state,data['category']['name'],description,data['link']);
@@ -198,6 +218,12 @@ class WeatherController{
         table.appendChild(act.toTableRow());
       }
     }
-
+    doReload(){
+     this.db.reloadMe();
+     this.redrawTable();
+   }
 }
 var wc = new WeatherController();
+window.onload = function() {
+    wc.doReload();
+}
