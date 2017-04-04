@@ -1,11 +1,12 @@
 class TodoItem{
-  constructor(name,city,state,category,description,link){
+  constructor(name,city,state,category,description,link,id){
     this.name=name;
     this.city=city;
     this.state=state;
     this.category=category;
     this.description=description;
     this.link=link;
+    this.id=id;
   }
   toTableRow(){
     var row=document.createElement('tr');
@@ -27,7 +28,7 @@ class TodoItem{
     let button=document.createElement('button');
     button.id=this.id;
     button.innerHTML="Delete";
-    button.onclick=wc.deleteItem();
+    button.onclick=function(){wc.deleteItem(this.id);};
     td.appendChild(button);
     row.appendChild(td);
     return row;
@@ -47,7 +48,11 @@ class TodoItemDB{
     //add item to localStorage
     localStorage.activitydb=JSON.stringify(this.db);
   }
-  deleteItem(item){
+  deleteItem(id){
+    for (let item of this.getTodoListDB()){
+      if (item.id==id) this.db.splice(id,1);
+    }
+    this.saveItem();
   }
   getTodoListDB(){
     return this.db
@@ -55,7 +60,7 @@ class TodoItemDB{
   reloadMe(){
     let obs = JSON.parse(localStorage.activitydb);
     for(let act of obs) {
-         act = new TodoItem(act.name, act.city, act.state, act.category,(act.description.split('.'))[0], act.link);
+         act = new TodoItem(act.name, act.city, act.state, act.category,(act.description.split('.'))[0], act.link,act.id);
          this.db.push(act);
      }
   }
