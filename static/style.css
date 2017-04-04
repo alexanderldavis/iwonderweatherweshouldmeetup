@@ -43,6 +43,27 @@ html, body {
   margin-top: 1%;
   background-color: rgb(246,246,246);
 }
+
+#allitemsul{
+  height:200px;
+  width: 75%;
+  float: center;
+  margin-top: 1%;
+  border-style: outset;
+  background-color:rgb(246,246,246);
+  overflow: hidden;
+  overflow-y: scroll;
+  list-style-type: none;
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+}
+
+#allitemsli {
+  background-color: rgb(23,23,23);
+}
+#allitemsli { background: rgb(154, 154, 154); }
+#allitemsli:nth-child(odd) { background: rgb(238, 238, 238); }
 /*p {
   margin-top: 1%;
   margin-left: 32%;
