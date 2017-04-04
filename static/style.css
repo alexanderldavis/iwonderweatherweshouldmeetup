@@ -36,13 +36,17 @@ html, body {
 
 #todoList {
   text-align:center;
-  width: 80%;
+  width: 75%;
   float: center;
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-left: 12.5%;
+  margin-right: 12.5%;
   margin-top: 1%;
   background-color: rgb(246,246,246);
+  border: none;
 }
+
+.todolistitem { background: rgb(154, 154, 154); }
+.todolistitem:nth-child(odd) { background: rgb(238,238,238); }
 
 #allitemsul{
   height:200px;
@@ -62,8 +66,7 @@ html, body {
 #allitemsli {
   background-color: rgb(23,23,23);
 }
-#allitemsli { background: rgb(154, 154, 154); }
-#allitemsli:nth-child(odd) { background: rgb(238, 238, 238); }
+
 /*p {
   margin-top: 1%;
   margin-left: 32%;

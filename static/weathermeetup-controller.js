@@ -216,33 +216,6 @@ class WeatherController{
 //       div.appendChild(ul);
 //     }
 
-    listActivity(data){
-      // remove old list of activity
-      let div=document.getElementById('listActivity');
-      let oldul=div.childNodes[0];
-      if (oldul) oldul.remove();
-      //add new list of activity
-      data=JSON.parse(data);
-      data=data['results'];
-
-      // let div=document.createElement('div')
-
-      let ul=document.createElement('ul');
-      ul.setAttribute("id","allitemsul");
-      let counter = 0;
-      for (let act of data){
-        counter = counter + 1;
-        console.log(act);
-        let li=document.createElement('li');
-        li.setAttribute("id","allitemsli");
-        li.innerHTML=act['name'];
-//////////////////////////////////////////////////////////////////////////// <-
-
-        // li.color="rgb(189, 197, 213)";
-        ul.appendChild(li);
-      }
-      div.appendChild(ul);
-    }
     deleteItem(item){
       this.db.deleteItem(item);
       // this.redrawTable();

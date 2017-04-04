@@ -9,6 +9,7 @@ class TodoItem{
   }
   toTableRow(){
     var row=document.createElement('tr');
+    row.setAttribute('class', 'todolistitem');
     for (let cell of ['name','city','state','category','description','link']){
       let td=document.createElement('td');
       if (cell=="link"){
