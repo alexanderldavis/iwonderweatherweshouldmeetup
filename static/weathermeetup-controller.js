@@ -245,12 +245,12 @@ class WeatherController{
     }
     deleteItem(item){
       this.db.deleteItem(item);
-      // this.redrawTable();
+      this.redrawTable();
     }
 
     addTodoList(data,state){
       var description=data['description'].split('.')[0]
-      var item=new TodoItem(data['name'],data['city'],state,data['category']['name'],description,data['link']);
+      var item=new TodoItem(data['name'],data['city'],state,data['category']['name'],description,data['link'],this.db.getTodoListDB().length);
       //add item into the database
       this.db.addTodoList(item);
       //redraw the table everytime an item is added
