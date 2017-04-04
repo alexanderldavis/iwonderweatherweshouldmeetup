@@ -49,7 +49,7 @@ class WeatherController{
       // li1.style.listStyleImage=`url(${url})`;
       li1.innerHTML="<img style='width: 50px;' src='"+url+"'</img>";
       ul.appendChild(li1);
-      for (let i of [{'name':'&deg;C','res_name':'dewpoint_c'},{'name':'&deg;F','res_name':'dewpoint_f'},{'name':'&deg;C (realFeel)','res_name':'feelslike_c'},{'name':'&deg;F (realFeel)','res_name':'feelslike_f'},{'name':'in precip','res_name':'precip_today_in'},{'name':' mph wind','res_name':'wind_mph'},{'name':' humidity','res_name':'relative_humidity'}]){
+      for (let i of [{'name':'&deg;C (realFeel)','res_name':'feelslike_c'},{'name':'&deg;F (realFeel)','res_name':'feelslike_f'},{'name':'in precip','res_name':'precip_today_in'},{'name':' mph wind','res_name':'wind_mph'},{'name':' humidity','res_name':'relative_humidity'}]){
         var text=result[i['res_name']];
         var li=document.createElement("li");
         li.innerHTML=text+i['name'];
