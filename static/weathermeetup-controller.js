@@ -41,9 +41,9 @@ class WeatherController{
       ul.setAttribute('class','list-inline');
       ul.style.backgroundColor = "white"
       ul.style.textAlign = "center"
-      ul.style.marginLeft = "12.5%"
-      ul.style.marginRight = "12.5%"
-      ul.style.width = "75%"
+      ul.style.marginLeft = "25%"
+      ul.style.marginRight = "25%"
+      ul.style.width = "50%"
       let li1=document.createElement("li");
       let url=result['icon_url'];
       // li1.style.listStyleImage=`url(${url})`;
