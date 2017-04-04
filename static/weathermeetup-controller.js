@@ -153,6 +153,7 @@ class WeatherController{
             self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong> <br>Click 'Add to ToDo' in the marker bubble on the map!</p>")
             //this is the json of all the data from the meetup function callback
             //map stuff should go here
+            console.log(data);
             self.addMarker(data);
             self.listActivity(data);
           });
@@ -194,6 +195,10 @@ class WeatherController{
         ul.appendChild(li);
       }
       div.appendChild(ul);
+    }
+    deleteItem(item){
+      this.db.deleteItem(item);
+      // this.redrawTable();
     }
     addTodoList(data,state){
       var description=data['description'].split('.')[0]
