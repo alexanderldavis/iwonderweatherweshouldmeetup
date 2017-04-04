@@ -22,19 +22,12 @@ class TodoItem{
     }
     //create delete button
     let td=document.createElement('td');
-    //td.innerHTML="<button type='submit' id=".this.id" class='btn btn-primary' onclick='ec.deleteExpense(this)' name='button'>Delete</button></div>";
+    //create delete button
     let button=document.createElement('button');
     button.id=this.id;
     button.innerHTML="Delete";
-    // button.onclick=function(){ec.deleteExpense(this.id);};
+    button.onclick=wc.deleteItem();
     td.appendChild(button);
-    row.appendChild(td);
-    //create edit button
-    let buttonE=document.createElement('button');
-    buttonE.id=this.id;
-    buttonE.innerHTML="Edit";
-    // buttonE.onclick=function(){ec.editExpense(this.id);};
-    td.appendChild(buttonE);
     row.appendChild(td);
     return row;
   }
@@ -52,6 +45,8 @@ class TodoItemDB{
   saveItem(){
     //add item to localStorage
     localStorage.activitydb=JSON.stringify(this.db);
+  }
+  deleteItem(item){
   }
   getTodoListDB(){
     return this.db

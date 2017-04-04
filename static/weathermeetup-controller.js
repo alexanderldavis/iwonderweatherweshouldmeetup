@@ -163,6 +163,7 @@ class WeatherController{
             self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong> <br>Click 'Add to ToDo' in the marker bubble on the map!</p>")
             //this is the json of all the data from the meetup function callback
             //map stuff should go here
+            console.log(data);
             self.addMarker(data);
             // self.listActivity(data); //Deprecated v2
           });
@@ -186,6 +187,7 @@ class WeatherController{
       }
       });
     }
+
 //     listActivity(data){
 //       // remove old list of activity
 //       let div=document.getElementById('listActivity');
@@ -213,6 +215,39 @@ class WeatherController{
 //       }
 //       div.appendChild(ul);
 //     }
+
+    listActivity(data){
+      // remove old list of activity
+      let div=document.getElementById('listActivity');
+      let oldul=div.childNodes[0];
+      if (oldul) oldul.remove();
+      //add new list of activity
+      data=JSON.parse(data);
+      data=data['results'];
+
+      // let div=document.createElement('div')
+
+      let ul=document.createElement('ul');
+      ul.setAttribute("id","allitemsul");
+      let counter = 0;
+      for (let act of data){
+        counter = counter + 1;
+        console.log(act);
+        let li=document.createElement('li');
+        li.setAttribute("id","allitemsli");
+        li.innerHTML=act['name'];
+//////////////////////////////////////////////////////////////////////////// <-
+
+        // li.color="rgb(189, 197, 213)";
+        ul.appendChild(li);
+      }
+      div.appendChild(ul);
+    }
+    deleteItem(item){
+      this.db.deleteItem(item);
+      // this.redrawTable();
+    }
+
     addTodoList(data,state){
       var description=data['description'].split('.')[0]
       var item=new TodoItem(data['name'],data['city'],state,data['category']['name'],description,data['link']);
