@@ -49,9 +49,8 @@ class TodoItemDB{
     localStorage.activitydb=JSON.stringify(this.db);
   }
   deleteItem(id){
-    for (let item of this.getTodoListDB()){
-      if (item.id==id) this.db.splice(id,1);
-    }
+    var index= this.getTodoListDB().findIndex(x=>x.id==id);
+    this.db.splice(index,1);
     this.saveItem();
   }
   getTodoListDB(){
