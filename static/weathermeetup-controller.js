@@ -17,6 +17,10 @@ class WeatherController{
     return category;
   }
 
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   getWeather() {
     var city=this.getCity();
     var state=this.getState();
@@ -25,6 +29,7 @@ class WeatherController{
       url:`http://localhost:8088/proxy/weather/${state}/${city}`,
       method:"GET"
     }).done(function(data){
+      city = city.toUpperCase();
       self.getMeetups();
       self.clearOldWeather();
       data=JSON.parse(data);
@@ -86,13 +91,17 @@ class WeatherController{
     var markers = [];
     var markernos = [];
     var infowindows = [];
+    var labelsA = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+    var counter = 0;
     for (var i=0; i<json1.results.length; i++) {
       var position = {lat: json1.results[i].lat,
                       lng: json1.results[i].lon};
       markers[i] = new google.maps.Marker({
           position: position,
+          label: labelsA[i],
           map: map
     	});
+      counter = counter+1;
       var object=json1.results[i];
       var contentString = '<h3>'+json1.results[i].name+'</h3>' +
                           json1.results[i].description+
@@ -111,7 +120,7 @@ class WeatherController{
           	//self.getInfo(json1.results[d]);
             document.getElementById("addTodo").onclick=function(){wc.addTodoList(json1.results[d],document.getElementById('state').value);};
             //document.getElementById("addTodo").onclick=function(){self.getInfo(json1.results[d]);};
-      		});
+          });
     	}
 
     // console.log(markers);
@@ -186,12 +195,20 @@ class WeatherController{
       data=JSON.parse(data);
       data=data['results'];
 
+      // let div=document.createElement('div')
+
       let ul=document.createElement('ul');
+      ul.setAttribute("id","allitemsul");
+      let counter = 0;
       for (let act of data){
+        counter = counter + 1;
         console.log(act);
         let li=document.createElement('li');
+        li.setAttribute("id","allitemsli");
         li.innerHTML=act['name'];
-        li.color="rgb(189, 197, 213)";
+//////////////////////////////////////////////////////////////////////////// <-
+
+        // li.color="rgb(189, 197, 213)";
         ul.appendChild(li);
       }
       div.appendChild(ul);
