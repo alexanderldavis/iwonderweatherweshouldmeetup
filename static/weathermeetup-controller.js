@@ -30,9 +30,10 @@ class WeatherController{
       method:"GET"
     }).done(function(data){
       city = city.toUpperCase();
-      self.getMeetups();
+      // self.getMeetups();
       self.clearOldWeather();
       data=JSON.parse(data);
+      // console.log(data);
       console.log(data["current_observation"]);
       var result=data["current_observation"];
       var div=document.getElementById('weather');
@@ -61,6 +62,12 @@ class WeatherController{
       // iframe.height="20%";
       // iframe.width="80%";
       // div.appendChild(iframe);
+      if (((result['weather']=="Partly Cloudy") || ((result['weather']=="Clear")))&&(result['feelslike_f']>=50)){
+        self.getMeetups(category=9);
+        self.addP("suggestion","<p style='text-align: center; color: rgb(189, 197, 213);'>Here are some activities that we recommend you to do since the weather is "+result['weather']+"<p>");
+      }else{
+        self.getMeetups();
+      }
     });
   }
   clearOldWeather(){
@@ -137,10 +144,11 @@ class WeatherController{
     if (oldp) oldp.remove();
     div.innerHTML=text;
   }
-  getMeetups() {
+
+  getMeetups(category=null) {
 	  var city = this.getCity();
     var state = this.getState();
-    var category=this.getCategory();
+    if(!category) category=this.getCategory();
     city = city.split(' ').join('_');
       $.ajax({
         url: "http://maps.googleapis.com/maps/api/geocode/json?address="+city+"+"+state+"&sensor=true",
@@ -160,7 +168,7 @@ class WeatherController{
             method: "GET"
           }).done(function(data) {
             //add directions for users:
-            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong> <br>Click 'Add to ToDo' in the marker bubble on the map!</p>")
+            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong> <br>Click 'Add to ToDo' in the marker bubble on the map!<br> Don't like what we suggest? You can see more activity by choosing different category</p>")
             //this is the json of all the data from the meetup function callback
             //map stuff should go here
             console.log(data);
@@ -178,7 +186,7 @@ class WeatherController{
             method: "GET"
           }).done(function(data) {
             //add directions for users:
-            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong><br>Click 'Add to ToDo' in the marker bubble on the map!</p>")
+            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong><br>Click 'Add to ToDo' in the marker bubble on the map!<br> Don't like what we suggest? You can see more activity by choosing different category</p>")
             //this is the json of all the data from the meetup function callback
             //map stuff should go here
             self.addMarker(data);

@@ -203,7 +203,7 @@ var category=[
 "id": 36,
 "shortname": "Writing"
 }
-]
+];
 var categorySelect = document.getElementById("category");
 
 for(var i = 0; i < category.length; i++) {
