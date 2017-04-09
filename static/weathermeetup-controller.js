@@ -31,7 +31,7 @@ class WeatherController{
       method:"GET"
     }).done(function(data){
       city = city.toUpperCase();
-      // self.getMeetups();
+      self.getMeetups();
       self.clearOldWeather();
       data=JSON.parse(data);
       // console.log(data);
@@ -64,127 +64,44 @@ class WeatherController{
       suggestionButton.appendChild(t);
       suggestionButton.setAttribute("class", "btn btn-default");
       suggestionButton.setAttribute("name", "suggestionButton");
-      suggestionButton.setAttribute("onclick", "wc.getRecommendations()");
+      suggestionButton.onclick=function(){wc.getRecommendations(result);}
       ul.appendChild(suggestionButton);
 
       div.appendChild(ul);
-      // var iframe=document.createElement("iframe");
-      // iframe.src=result["forecast_url"];
-      // iframe.height="20%";
-      // iframe.width="80%";
-      // div.appendChild(iframe);
-      if (((result['weather']=="Partly Cloudy") || ((result['weather']=="Clear")))&&(result['feelslike_f']>=50)){
-        self.getMeetups(category=9);
-        self.addP("suggestion","<p style='text-align: center; color: rgb(189, 197, 213);'>Here are some activities that we recommend you to do since the weather is "+result['weather']+"<p>");
-      }else{
-        self.getMeetups();
-      }
     });
   }
 
-  getRecommendations() {
-    this.getWeatherforRecommendations();
-  }
-
-  getWeatherforRecommendations() {
-    var city=this.getCity();
-    var state=this.getState();
-    self=this;
-    $.ajax({
-      url:`http://localhost:8088/proxy/weather/${state}/${city}`,
-      method:"GET"
-    }).done(function(data){
-      city = city.toUpperCase();
-      self.clearOldWeather();
-      data=JSON.parse(data);
-      console.log(data["current_observation"]);
-      var result=data["current_observation"];
-      var div=document.getElementById('weather');
-      self.addP('weather','<p style="margin-top: 1%; text-align: center; color: rgb(189, 197, 213);">Here is what the weather is like in '+city+', '+state+'!</p>')
-      var ul=document.createElement("ul");
-      ul.setAttribute('class','list-inline');
-      ul.style.backgroundColor = "white"
-      ul.style.textAlign = "center"
-      ul.style.marginLeft = "25%"
-      ul.style.marginRight = "25%"
-      ul.style.width = "50%"
-      let li1=document.createElement("li");
-      let url=result['icon_url'];
-      // li1.style.listStyleImage=`url(${url})`;
-      li1.innerHTML="<img style='width: 50px;' src='"+url+"'</img>";
-      ul.appendChild(li1);
-      for (let i of [{'name':'&deg;C','res_name':'feelslike_c'},{'name':'&deg;F','res_name':'feelslike_f'},{'name':'in precip','res_name':'precip_today_in'},{'name':' mph wind','res_name':'wind_mph'},{'name':' humidity','res_name':'relative_humidity'}]){
-        var text=result[i['res_name']];
-        var li=document.createElement("li");
-        li.innerHTML=text+i['name'];
-        ul.appendChild(li);
+  getRecommendations(result) {
+    self.addP("suggestion","<p style='text-align: center; color: rgb(189, 197, 213);'>Here are some activities that we recommend you to do since the weather is "+result['weather']+".<br> Don't like what we suggest? You can see more activity by choosing different category</p>");
+    var pWeather=['Partly Cloudy','Clear','Mostly Cloudy','Mostly Cloudy','Cloudy','Mostly Sunny','Partly Sunny','Sunny'];
+    var nWeather=['Chance of Flurries','Chance of Rain','Chance of Sleet','Chance of Snow','Chance of Thunderstorm','Flurries','Hazy','Rain','Snow','Sleet','Thunderstorm'];
+    if ((result['temp_c']<= -5)||(nWeather.indexOf(result['weather'])>-1)) {
+      self.getMeetups();
+      alert("We will show you things available nearby but honestly, you should stay in your hotel/AirBnb/your house's room and watch Netflix instead of going somewhere.")
+    }else{
+      if ((result['temp_c']>-5)&&(result['temp_c']<5)){
+        var items=Array("18","8","11","15","20","26");
+        var item = items[Math.floor(Math.random()*items.length)];
+        self.getMeetups(item);
       }
-
-      //Add WEATHER TESTCASES here
-      if (result.temp_c<= 10) {
-        self.getMeetupsRecommendations("18");
+      else if ((result['temp_c']>5)&&(result['temp_c']<20)) {
+        var items = Array("4","5","9","10","14","17","23","32");
+        var item = items[Math.floor(Math.random()*items.length)];
+        self.getMeetups(item);
+      } else {
+        var items = Array("1","18","2","3","5","6","7","8","11","12","15","16","18","19","20","21","22","24","25","27","28","29","30","31");
+        var item = items[Math.floor(Math.random()*items.length)];
+        self.getMeetups(item);
       }
-      if (result.temp_c>= 20) {
-        self.getMeetupsRecommendations("9");
-      }
-      div.appendChild(ul);
-    });
-  }
-
-  getMeetupsRecommendations(categoryinput) {
-    var city = this.getCity();
-    var state = this.getState();
-    var category = categoryinput;
-    city = city.split(' ').join('_');
-      $.ajax({
-        url: "http://maps.googleapis.com/maps/api/geocode/json?address="+city+"+"+state+"&sensor=true",
-        method: "GET"
-      }).done(function(data) {
-        var lon, lat;
-        lat = data.results[0].geometry.location.lat;
-        lon = data.results[0].geometry.location.lng;
-        if (category < 1) {
-          $.ajax({
-            // url: "http://localhost:8088/proxy/meetupmain?zip=94066&radius=1&category=25&order=members",
-            //https://api.meetup.com/find/events?&sign=true&photo-host=public&lon=-122.28178&lat=37.9298239
-            //url: "http://localhost:8088/proxy/meetupmain?zip="+location+"&radius=1&order=members",
-            //url: "http://localhost:8088/proxy/meetupmain?lon="+lon+"&lat="+lat+"&radius=1&oder=members",
-            url: "http://localhost:8088/proxy/meetupmain?photo-host=public&lat="+lat+"&lon="+lon,
-            method: "GET"
-          }).done(function(data) {
-            //add directions for users:
-            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong> <br>Click 'Add to ToDo' in the marker bubble on the map!</p>")
-            //this is the json of all the data from the meetup function callback
-            //map stuff should go here
-            console.log(data);
-            self.addMarker(data);
-            // self.listActivity(data); //Deprecated v2
-          });
-        } else {
-          $.ajax({
-            // url: "http://localhost:8088/proxy/meetupmain?zip=94066&radius=1&category=25&order=members",
-            //https://api.meetup.com/find/events?&sign=true&photo-host=public&lon=-122.28178&lat=37.9298239
-            //url: "http://localhost:8088/proxy/meetupmain?zip="+location+"&radius=1&order=members",
-            //url: "http://localhost:8088/proxy/meetupmain?lon="+lon+"&lat="+lat+"&radius=1&oder=members",
-            url: "http://localhost:8088/proxy/meetupmain?photo-host=public&lat="+lat+"&lon="+lon+"&category_id="+category+"&page=20",
-
-            method: "GET"
-          }).done(function(data) {
-            //add directions for users:
-            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong><br>Click 'Add to ToDo' in the marker bubble on the map!</p>")
-            //this is the json of all the data from the meetup function callback
-            //map stuff should go here
-            self.addMarker(data);
-            // self.listActivity(data); //Deprecated V2
-          });
-      }
-      });
     }
+  }
 
   clearOldWeather(){
     var ul=document.getElementsByTagName('ul')[0];
     if (ul)
     ul.remove();
+    var suggestion=document.getElementById("suggestion").childNodes[0];
+    if (suggestion) suggestion.remove();
   }
 
   initMap() {
@@ -279,7 +196,7 @@ class WeatherController{
             method: "GET"
           }).done(function(data) {
             //add directions for users:
-            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong> <br>Click 'Add to ToDo' in the marker bubble on the map!<br> Don't like what we suggest? You can see more activity by choosing different category</p>")
+            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong> <br>Click 'Add to ToDo' in the marker bubble on the map!</p>")
             //this is the json of all the data from the meetup function callback
             //map stuff should go here
             console.log(data);
@@ -297,7 +214,7 @@ class WeatherController{
             method: "GET"
           }).done(function(data) {
             //add directions for users:
-            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong><br>Click 'Add to ToDo' in the marker bubble on the map!<br> Don't like what we suggest? You can see more activity by choosing different category</p>")
+            self.addP('directions',"<p style='text-align: center; color: rgb(189, 197, 213);'><strong>Do you know that you can add the activity to the ToDo list below? </strong><br>Click 'Add to ToDo' in the marker bubble on the map!</p>")
             //this is the json of all the data from the meetup function callback
             //map stuff should go here
             self.addMarker(data);
@@ -306,34 +223,6 @@ class WeatherController{
       }
       });
     }
-
-//     listActivity(data){
-//       // remove old list of activity
-//       let div=document.getElementById('listActivity');
-//       let oldul=div.childNodes[0];
-//       if (oldul) oldul.remove();
-//       //add new list of activity
-//       data=JSON.parse(data);
-//       data=data['results'];
-//
-//       // let div=document.createElement('div')
-//
-//       let ul=document.createElement('ul');
-//       ul.setAttribute("id","allitemsul");
-//       let counter = 0;
-//       for (let act of data){
-//         counter = counter + 1;
-//         console.log(act);
-//         let li=document.createElement('li');
-//         li.setAttribute("id","allitemsli");
-//         li.innerHTML=act['name'];
-// //////////////////////////////////////////////////////////////////////////// <-
-//
-//         // li.color="rgb(189, 197, 213)";
-//         ul.appendChild(li);
-//       }
-//       div.appendChild(ul);
-//     }
 
     deleteItem(item){
       this.db.deleteItem(item);

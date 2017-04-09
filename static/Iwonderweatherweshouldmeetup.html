@@ -33,6 +33,11 @@
       <select id="state" name="states" class="form-control input-sm" value=""></select>
       </div>
 
+      <div class="form-group">
+      <label class="sr-only" for="activities">Categories</label>
+      <select id="category" class="form-control input-sm" name="category" value=""></select>
+      <script type="text/javascript" src="categories.js"></script>
+      </div>
       <script type="text/javascript" src="states.js"></script>
 
       <button class="btn btn-default" type="button" name="button" onclick="wc.getWeather()">Search</button>
@@ -42,16 +47,6 @@
     <div class="container" id="suggestion"></div>
     <div class="container" id="directions"></div>
     <div class="container" id="map"></div>
-    <div class="container">
-      <form class="form-inline" >
-        <div class="form-group">
-        <label class="sr-only" for="activities">Categories</label>
-        <select id="category" class="form-control input-sm" name="category" value=""></select>
-        <script type="text/javascript" src="categories.js"></script>
-        <button class="btn btn-default" type="button" name="button" onclick="wc.getMeetups()">Search</button>
-        </div>
-      </form>
-    </div>
     <div class="container" id="todolist">
       <table>
         <tr></tr>
