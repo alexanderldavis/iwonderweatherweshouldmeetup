@@ -210,5 +210,6 @@ for(var i = 0; i < category.length; i++) {
       var option = document.createElement("option");
       option.text =category[i].name;
       option.value = category[i].id;
+      option.id = category[i].name;
       categorySelect.add(option);
   }
