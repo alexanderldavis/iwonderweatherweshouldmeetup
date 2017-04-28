@@ -7,7 +7,7 @@ Hello! Welcome to the git repository of IWWWSM! This is an API Mashup created fo
 
 To use:
 1. Open Terminal
-2. Type git clone https://github.com/alexanderldavis/iwonderweatherweshouldmeetup.git
-3. Type cd iwonderweatherweshouldmeetup
-4. Type python3 myserver.py
+2. Type `git clone https://github.com/alexanderldavis/iwonderweatherweshouldmeetup.git`
+3. Type `cd iwonderweatherweshouldmeetup`
+4. Type `python3 myserver.py`
 5. Open a browser and navigate to http://localhost:8088/static/Iwonderweatherweshouldmeetup.html
